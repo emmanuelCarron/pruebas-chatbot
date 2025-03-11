@@ -9,11 +9,9 @@ const flowPrincipal = addKeyword(['hola', 'alo'])
     console.log(ctx.pushName);
 })
 .addAction(async (ctx, { flowDynamic }) => {
-  return await flowDynamic('¡Hola ' + ctx.pushName + '! ¿En qué puedo ayudarte? Te comunicaste desde el: ' + ctx.from)
-})
-.addAction({ capture: true }, async (ctx, { flowDynamic }) => {
-  const mensaje = ctx.body
-  return await flowDynamic(`Has dicho: ${mensaje}`)
+    //if (5493516611043 == ctx.from) {
+        return await flowDynamic('¡Hola ' + ctx.pushName + '! ¿En qué puedo ayudarte? Te comunicaste desde el: ' + ctx.from)
+    //}
 })
 
 
