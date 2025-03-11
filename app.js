@@ -1,4 +1,5 @@
 const { createBot, createProvider, createFlow, addKeyword } = require('@bot-whatsapp/bot')
+const axios = require('axios')
 
 const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
@@ -9,9 +10,18 @@ const flowPrincipal = addKeyword(['hola', 'alo'])
     console.log(ctx.pushName);
 })
 .addAction(async (ctx, { flowDynamic }) => {
-    //if (5493516611043 == ctx.from) {
-        return await flowDynamic('¡Hola ' + ctx.pushName + '! ¿En qué puedo ayudarte? Te comunicaste desde el: ' + ctx.from)
-    //}
+    const apiResponse = await axios.get('http://localhost:8080/hello') //una api que responde Hello world!
+        .then((response) => {
+            // Manejar la respuesta exitosa
+            console.log('cresponse:', response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            // Manejar el error en caso de fallo
+            console.error('Error al obtener usuarios:', error);
+            return 'En este momento no podemos atenderte, intentalo mas tarde.'
+        });
+    return await flowDynamic('¡Hola ' + ctx.pushName + '! Este mensaje es generado por una api externa:' + apiResponse)
 })
 
 
