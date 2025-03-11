@@ -10,7 +10,11 @@ const flowPrincipal = addKeyword(['hola', 'alo'])
     console.log(ctx.pushName);
 })
 .addAction(async (ctx, { flowDynamic }) => {
-    const apiResponse = await axios.get('http://localhost:8080/hello') //una api que responde Hello world!
+    const params = {
+        'name': ctx.pushName,
+        'number': ctx.from
+    }
+    const apiResponse = await axios.get('http://localhost:8080/hello/parametrized', { params }) //una api que responde Hello world!
         .then((response) => {
             // Manejar la respuesta exitosa
             console.log('cresponse:', response.data);
